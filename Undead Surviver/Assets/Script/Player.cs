@@ -13,11 +13,12 @@ public class Player : MonoBehaviour //MonoBehaviour = °ÔÀÓ ·ÎÁ÷ ±¸Á¤¿¡ ÇÊ¿äÇÑ°Íµ
 {
     //public ¼±¾ð : ´Ù¸¥ ½ºÅ©¸³Æ®¿¡°Ô °ø°³ÇÑ´Ù°í ¼±¾ðÇÏ´Â Å°¿öµå
     public Vector2 inputVec;
-    //º¯¼ö ¼±¾ð : µ¥ÀÌÅÍÅ¸ÀÔ   µ¥ÀÌÅÍÀÌ¸§;
+    
 
     //°ÔÀÓ¿ÀºêÁ§Æ®ÀÇ ¸®Áöµå¹Ùµð 2D¸¦ ÀúÀåÇÒ º¯¼ö ¼±¾ð
     Rigidbody2D rigid;
-
+    SpriteRenderer spriter;
+    Animator anim;
     public float speed;
 
 
@@ -29,7 +30,14 @@ public class Player : MonoBehaviour //MonoBehaviour = °ÔÀÓ ·ÎÁ÷ ±¸Á¤¿¡ ÇÊ¿äÇÑ°Íµ
     {
         //GetComponent<T> = ¿ÀºêÁ§Æ®¿¡¼­ ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿À´Â ÇÔ¼ö
         rigid = GetComponent<Rigidbody2D>();
+        spriter = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+
     }
+
+
+
+
 
 
     // Start is called before the first frame update
@@ -38,16 +46,7 @@ public class Player : MonoBehaviour //MonoBehaviour = °ÔÀÓ ·ÎÁ÷ ±¸Á¤¿¡ ÇÊ¿äÇÑ°Íµ
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //Input = À¯´ÏÆ¼¿¡¼­ ¹Þ´Â ¸ðµç ÀÔ·ÂÀ» °ü¸®ÇÏ´Â Å¬·¡½º
-        //GetAxis = HorizontalÀÇ °ªÀ» ¹ÝÈ¯ÇÔ
-        //inputVec.x = Input.GetAxisRaw("Horizontal");
-        //inputVec.y = Input.GetAxisRaw("Vertical");
-        //GetAxisRaw = ´õ¿í ¸íÈ®ÇÑ ÄÁÆ®·ÑÀÌ ±¸ÇöµÊ
-
-    }
+    
 
 
 
@@ -59,22 +58,8 @@ public class Player : MonoBehaviour //MonoBehaviour = °ÔÀÓ ·ÎÁ÷ ±¸Á¤¿¡ ÇÊ¿äÇÑ°Íµ
         //normalized = Á¤±ÔÈ­, º¤ÅÍ °ªÀÇ Å©±â°¡ 1ÀÌ µÇµµ·Ï ÁÂÇ¥°¡ ¼öÁ¤µÈ °ª. ´ë°¢¼± ÀÌµ¿À» ÇÒ ¶§ ´õ ºü¸£°Ô ¿òÁ÷ÀÌ´Â °ÍÀ» ¹æÁöÇÏ±â À§ÇÔ.
         Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
         //fixedDeltatime = ¹°¸® ÇÁ·¹ÀÓ ÇÏ³ª°¡ ¼ÒºñÇÑ ½Ã°£
-
-
-
-        //¹°¸® ÀÌµ¿ ¹æ½Ä ¼¼°¡Áö
-
-        //1. ÈûÀ» ÁØ´Ù
-        //rigid.AddForce (inputVec);
-        //AddForceÀÇ °æ¿ì °¡¼Óµµ¿¡ ÇØ´çµÅ ¿¬¼ÓÇØ¼­ °¡ÇÏ¸é ÀÚµ¿Â÷ÀÇ Æä´ÞÃ³·³ °¡¼ÓÇÔ.
-        //¼ø°£ÀûÀ¸·Î Æ¢¾î¿À¸£°í Á¡Â÷ ¼Óµµ°¡ ÁÙ¾îµå´Â Á¡ÇÁÀÇ °³³ä¿¡ ÀûÇÕÇÏ´Ù
-
-
-        //2. ¼Óµµ Á¦¾î
-        //rigid.velocity = inputVec;
-        //velocityÀÇ ÈûÀ» °¡ÇØµµ µ¿ÀÏÇÑ ¼Óµµ·Î ´Þ¸± ¼ö ÀÖµµ·Ï ¹°¸®¿£ÁøÀÌ ÀÚµ¿À¸·Î °è»ê ÇØÁÜ.
-
-        //3. À§Ä¡ ÀÌµ¿
+        
+        //À§Ä¡ ÀÌµ¿
         rigid.MovePosition (rigid.position + nextVec);
         //MovePositionÀº À§Ä¡ ÀÌµ¿ÀÌ¶ó ÇöÀç À§Ä¡µµ ´õÇØÁÖ¾î¾ß ÇÔ.
         //inputVecÀÇ  °ªÀº -1,-1 ~ 1,1ÀÌ±â ¶§¹®¿¡ ÇöÀç À§Ä¡¿¡¼­ inputVecÀÇ °ª ¸¸Å­ ´õÇØ¼­ ÀÌµ¿½ÃÅ°±â À§ÇÔÀÓ.
@@ -82,11 +67,35 @@ public class Player : MonoBehaviour //MonoBehaviour = °ÔÀÓ ·ÎÁ÷ ±¸Á¤¿¡ ÇÊ¿äÇÑ°Íµ
 
     }
 
-
     void OnMove(InputValue value)
     {
         inputVec = value.Get<Vector2>();
 
     }
+
+
+    /// <summary>
+    /// Late Update = ÇÁ·¹ÀÓÀÌ Á¾·áµÇ±â Àü ½ÇÇàµÇ´Â »ý¸íÁÖ±â ÇÔ¼ö
+    /// </summary>
+    void LateUpdate()
+    {
+
+        anim.SetFloat("Speed",inputVec.magnitude);
+        //magnitude : º¤ÅÍÀÇ ¼ø¼öÇÑ Å©±â °ªÀ¸·Î º¯È¯
+
+
+
+        if (inputVec.x != 0)
+        {
+            spriter.flipX = inputVec.x < 0;
+        } //inputVec.XÀÇ °ªÀÌ 0µµ ¾Æ´Ï°í, 0º¸´Ù ÀÛÀ»½Ã ½ºÇÁ¶óÀÌÆ®¸¦ µÚÁýÀ½
+
+
+
+
+    }
+
+
+
 
 }
