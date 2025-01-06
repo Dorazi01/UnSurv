@@ -1,24 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-
-
-
-//C#½ºÅ©¸³Æ®¸¦ ¿ÀºêÁ§Æ® ÄÄÆ÷³ÍÆ®¿¡ ³Ö¾î¾ß ¿ÀºêÁ§Æ®°¡ ¿òÁ÷ÀÏ ¼ö ÀÖ´Ù. 
-
-
-public class Player : MonoBehaviour //MonoBehaviour = °ÔÀÓ ·ÎÁ÷ ±¸Á¤¿¡ ÇÊ¿äÇÑ°ÍµéÀ» °¡Áø Å¬·¡½º
+public class NotePad : MonoBehaviour
 {
-    //public ¼±¾ð : ´Ù¸¥ ½ºÅ©¸³Æ®¿¡°Ô °ø°³ÇÑ´Ù°í ¼±¾ðÇÏ´Â Å°¿öµå
+    /*
+    public ¼±¾ð : ´Ù¸¥ ½ºÅ©¸³Æ®¿¡°Ô °ø°³ÇÑ´Ù°í ¼±¾ðÇÏ´Â Å°¿öµå
     public Vector2 inputVec;
     //º¯¼ö ¼±¾ð : µ¥ÀÌÅÍÅ¸ÀÔ   µ¥ÀÌÅÍÀÌ¸§;
 
     //°ÔÀÓ¿ÀºêÁ§Æ®ÀÇ ¸®Áöµå¹Ùµð 2D¸¦ ÀúÀåÇÒ º¯¼ö ¼±¾ð
     Rigidbody2D rigid;
-
-    public float speed;
 
 
 
@@ -35,7 +27,7 @@ public class Player : MonoBehaviour //MonoBehaviour = °ÔÀÓ ·ÎÁ÷ ±¸Á¤¿¡ ÇÊ¿äÇÑ°Íµ
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -43,10 +35,9 @@ public class Player : MonoBehaviour //MonoBehaviour = °ÔÀÓ ·ÎÁ÷ ±¸Á¤¿¡ ÇÊ¿äÇÑ°Íµ
     {
         //Input = À¯´ÏÆ¼¿¡¼­ ¹Þ´Â ¸ðµç ÀÔ·ÂÀ» °ü¸®ÇÏ´Â Å¬·¡½º
         //GetAxis = HorizontalÀÇ °ªÀ» ¹ÝÈ¯ÇÔ
-        //inputVec.x = Input.GetAxisRaw("Horizontal");
-        //inputVec.y = Input.GetAxisRaw("Vertical");
+        inputVec.x = Input.GetAxisRaw("Horizontal");
+        inputVec.y = Input.GetAxisRaw("Vertical");
         //GetAxisRaw = ´õ¿í ¸íÈ®ÇÑ ÄÁÆ®·ÑÀÌ ±¸ÇöµÊ
-
     }
 
 
@@ -54,8 +45,7 @@ public class Player : MonoBehaviour //MonoBehaviour = °ÔÀÓ ·ÎÁ÷ ±¸Á¤¿¡ ÇÊ¿äÇÑ°Íµ
 
 
     //¹°¸®¿¬»ê ÇÁ·¹ÀÓ¸¶´Ù È£ÃâµÇ´Â »ý¸íÁÖ±âÇÔ¼ö
-    void FixedUpdate()
-    {
+    
         //normalized = Á¤±ÔÈ­, º¤ÅÍ °ªÀÇ Å©±â°¡ 1ÀÌ µÇµµ·Ï ÁÂÇ¥°¡ ¼öÁ¤µÈ °ª. ´ë°¢¼± ÀÌµ¿À» ÇÒ ¶§ ´õ ºü¸£°Ô ¿òÁ÷ÀÌ´Â °ÍÀ» ¹æÁöÇÏ±â À§ÇÔ.
         Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
         //fixedDeltatime = ¹°¸® ÇÁ·¹ÀÓ ÇÏ³ª°¡ ¼ÒºñÇÑ ½Ã°£
@@ -75,18 +65,63 @@ public class Player : MonoBehaviour //MonoBehaviour = °ÔÀÓ ·ÎÁ÷ ±¸Á¤¿¡ ÇÊ¿äÇÑ°Íµ
         //velocityÀÇ ÈûÀ» °¡ÇØµµ µ¿ÀÏÇÑ ¼Óµµ·Î ´Þ¸± ¼ö ÀÖµµ·Ï ¹°¸®¿£ÁøÀÌ ÀÚµ¿À¸·Î °è»ê ÇØÁÜ.
 
         //3. À§Ä¡ ÀÌµ¿
-        rigid.MovePosition (rigid.position + nextVec);
+        rigid.MovePosition(rigid.position + nextVec);
         //MovePositionÀº À§Ä¡ ÀÌµ¿ÀÌ¶ó ÇöÀç À§Ä¡µµ ´õÇØÁÖ¾î¾ß ÇÔ.
         //inputVecÀÇ  °ªÀº -1,-1 ~ 1,1ÀÌ±â ¶§¹®¿¡ ÇöÀç À§Ä¡¿¡¼­ inputVecÀÇ °ª ¸¸Å­ ´õÇØ¼­ ÀÌµ¿½ÃÅ°±â À§ÇÔÀÓ.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    */
+
+
+
     }
-
-
-    void OnMove(InputValue value)
-    {
-        inputVec = value.Get<Vector2>();
-
-    }
-
-}
