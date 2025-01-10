@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class RepositionMap : MonoBehaviour
 {
+
+    Collider2D coll;
+
+    void Awake()
+    {
+        coll = GetComponent<Collider2D>();
+    }
+
+
     // Start is called before the first frame update
     void OnTriggerExit2D(Collider2D collision)
     {
@@ -50,7 +59,10 @@ public class RepositionMap : MonoBehaviour
 
                 break;
             case "Enemy":
-
+                if (coll.enabled)
+                {
+                    transform.Translate(playerDir * 29 + new Vector3(Random.Range(-3f,3f),Random.Range(-3f, 3f), 0f));
+                }
 
                 break;
         }
