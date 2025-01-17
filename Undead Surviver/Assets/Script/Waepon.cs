@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -13,6 +14,16 @@ public class Waepon : MonoBehaviour
     public float damage;
     public int count;
     public float speed;
+
+    float timer;
+
+    Player player;
+
+    private void Awake()
+    {
+        player = gameObject.GetComponentInParent<Player>();
+    }
+
 
     void Start()
     {
@@ -28,18 +39,22 @@ public class Waepon : MonoBehaviour
 
                 break;
 
-
-
             default:
+                timer += Time.deltaTime;
+
+                if (timer > speed)
+                {
+                    timer = 0f;
+                    Fire();
+                }
                 break;
         }
 
-        //TEST
+        
         if (Input.GetButtonDown("Jump"))
         {
-            levelUp(20 , 5);
+            levelUp(20, 5);
         }
-
 
 
     }
@@ -63,15 +78,17 @@ public class Waepon : MonoBehaviour
                 Batch();
 
                 break;
-
             
 
             default:
+                speed = 0.3f;
                 break;
         }
     }
 
-
+    /// <summary>
+    /// 근접무기 배치
+    /// </summary>
     void Batch()
     {
         for (int index = 0; index < count; index++)
@@ -98,9 +115,32 @@ public class Waepon : MonoBehaviour
             Vector3 rotVec = Vector3.forward * 360 * index / count;
             bullet.Rotate(rotVec);
             bullet.Translate(bullet.up * 1.5f, Space.World);
-            bullet.GetComponent<Bullet>().Init(damage, -1);             // -1 is Infinity per
+            bullet.GetComponent<Bullet>().Init(damage, -1, Vector3.zero);             // -1 is Infinity per
         }
     }
 
 
+
+
+    /// <summary>
+    /// 총알 발사
+    /// </summary>
+    void Fire()
+    {
+        if (!player.scanner.nearestTarget)
+            return;
+
+        Vector3 targetPos = player.scanner.nearestTarget.position;
+        Vector3 dir = targetPos - transform.position;
+        dir = dir.normalized;
+
+
+
+        Transform bullet = GameManager.instance.pool.Get(prefabId).transform;
+        bullet.position = transform.position;
+        bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+        //FromToRotation = 지정된 축을 중심으로 목표를 향해 회전하는 함수
+        bullet.GetComponent<Bullet>().Init(damage, count, dir);    
+
+    }
 }
