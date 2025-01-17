@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameMananger : MonoBehaviour
 {
     public static GameMananger instance;
+    public PoolManager pool;
     /*다른 스크립트에서 GameManager.instance.원하는 함수나 변수에 접근이 가능함
       이와같은 기법을 싱글톤 패턴이라고 부른다.
     */

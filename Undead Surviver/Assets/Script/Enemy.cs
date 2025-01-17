@@ -28,9 +28,6 @@ public class Enemy : MonoBehaviour
             return;
 
         
-        
-
-
         Vector2 dirVec = target.position - rigid.position;
         Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
@@ -50,6 +47,12 @@ public class Enemy : MonoBehaviour
         spriter.flipX = target.position.x < rigid.position.x;
 
 
+
+    }
+    void OnEnable()
+    {
+        //프리팹이 활성화 시 타겟을 플레이어로 따라오게끔 적용
+        target = GameMananger.instance.player.GetComponent<Rigidbody2D>();
 
     }
 

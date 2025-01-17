@@ -61,7 +61,7 @@ public class RepositionMap : MonoBehaviour
             case "Enemy":
                 if (coll.enabled)
                 {
-                    transform.Translate(playerDir * 29 + new Vector3(Random.Range(-3f,3f),Random.Range(-3f, 3f), 0f));
+                    transform.Translate(playerDir * 35 + new Vector3(Random.Range(-3f,3f),Random.Range(-3f, 3f), 0f));
                 }
 
                 break;
