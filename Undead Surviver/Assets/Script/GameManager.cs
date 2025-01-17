@@ -41,6 +41,11 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+    private void Start()
+    {
+        health = maxHealth;
+    }
     void Update()
     {
         gameTime += Time.deltaTime;
