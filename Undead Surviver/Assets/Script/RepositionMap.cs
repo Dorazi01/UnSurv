@@ -26,7 +26,7 @@ public class RepositionMap : MonoBehaviour
 
 
 
-        Vector3 playerPos = GameMananger.instance.player.transform.position;
+        Vector3 playerPos = GameManager.instance.player.transform.position;
         //Player을 상속받을 수 있는 이유는 게임매니저에 싱글톤패턴을 사용했기 때문이다.\
         Vector3 myPos = transform.position;
         float diffX = Mathf.Abs(playerPos.x - myPos.x);
@@ -36,7 +36,7 @@ public class RepositionMap : MonoBehaviour
         //diffX,Y = 플레이어와 타일맵의 위치 비교
 
 
-        Vector3 playerDir = GameMananger.instance.player.inputVec;
+        Vector3 playerDir = GameManager.instance.player.inputVec;
         float dirX = playerDir.x < 0 ? -1 : 1;
         float dirY = playerDir.y < 0 ? -1 : 1;
         //뒤쪽에 있는 타일 맵을 어느쪽으로 추가할 지 알기위해 만든 변수같음
