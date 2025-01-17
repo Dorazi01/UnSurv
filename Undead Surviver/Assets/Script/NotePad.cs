@@ -71,8 +71,11 @@ public class NotePad : MonoBehaviour
 
 
 
+    IEnumerator = Coroutine 코루틴 함수 : 생명주기와 비동기처럼 실행되는 함수
 
+    ex) yield return null; //1프레임을 쉼
 
+        yield return new WaitForSeconds(2f); //2초 쉬기
 
 
 
@@ -124,4 +127,4 @@ public class NotePad : MonoBehaviour
 
 
 
-    }
+}
