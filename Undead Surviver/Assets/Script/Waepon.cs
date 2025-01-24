@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -21,14 +22,10 @@ public class Waepon : MonoBehaviour
 
     private void Awake()
     {
-        player = gameObject.GetComponentInParent<Player>();
+        player = GameManager.instance.player;
     }
 
 
-    void Start()
-    {
-        Init();
-    }
     // Update is called once per frame
     void Update()
     {
@@ -39,9 +36,9 @@ public class Waepon : MonoBehaviour
 
                 break;
 
-            default:
+            case 1:
                 timer += Time.deltaTime;
-
+                
                 if (timer > speed)
                 {
                     timer = 0f;
@@ -50,10 +47,10 @@ public class Waepon : MonoBehaviour
                 break;
         }
 
-        
+        //test
         if (Input.GetButtonDown("Jump"))
         {
-            levelUp(20, 5);
+            levelUp(10, 1);
         }
 
 
@@ -66,11 +63,36 @@ public class Waepon : MonoBehaviour
 
         if (id == 0)
             Batch();
+
+        player.BroadcastMessage("ApplyGear",SendMessageOptions.DontRequireReceiver);
     }
 
 
-    public void Init()
+    public void Init(ItemData data)
     {
+
+        //기본 세팅
+        name = "Waepon" + data.itemId;
+        transform.parent = player.transform;
+        transform.localPosition = Vector3.zero;
+
+
+
+        //프로퍼티 세팅
+        id = data.itemId;
+        damage = data.baseDamage;
+        count = data.baseCount;
+
+        for (int index  = 0; index < GameManager.instance.pool.prefabs.Length; index++)
+        {
+            if(data.projectile == GameManager.instance.pool.prefabs[index])
+            {
+                prefabId = index;
+                break;
+            }
+        }
+
+
         switch (id)
         {
             case 0:
@@ -81,9 +103,11 @@ public class Waepon : MonoBehaviour
             
 
             default:
-                speed = 0.3f;
+                speed = 0.4f;
                 break;
         }
+
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
     /// <summary>
@@ -129,6 +153,7 @@ public class Waepon : MonoBehaviour
     {
         if (!player.scanner.nearestTarget)
             return;
+        
 
         Vector3 targetPos = player.scanner.nearestTarget.position;
         Vector3 dir = targetPos - transform.position;
