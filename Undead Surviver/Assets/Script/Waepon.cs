@@ -107,6 +107,12 @@ public class Waepon : MonoBehaviour
                 break;
         }
 
+        //Hand set
+
+        Hand hand = player.hands[(int)data.itemType];
+        hand.spriter.sprite = data.hand;
+        hand.gameObject.SetActive(true);
+
         player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 

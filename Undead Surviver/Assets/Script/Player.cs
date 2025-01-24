@@ -14,6 +14,7 @@ public class Player : MonoBehaviour //MonoBehaviour = 게임 로직 구정에 필요한것�
     //public 선언 : 다른 스크립트에게 공개한다고 선언하는 키워드
     public Vector2 inputVec;
     public Scanner scanner;
+    public Hand[] hands;
 
     //게임오브젝트의 리지드바디 2D를 저장할 변수 선언
     Rigidbody2D rigid;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour //MonoBehaviour = 게임 로직 구정에 필요한것�
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         scanner = GetComponent<Scanner>();
+        hands = GetComponentsInChildren<Hand>(true);
     }
 
 
