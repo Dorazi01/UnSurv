@@ -61,8 +61,8 @@ public class Waepon : MonoBehaviour
 
     public void levelUp(float damage, int count)
     {
-        this.damage = damage;
-        this.count += count;
+        this.damage = damage * Character.Damage;
+        this.count += count ;
 
         if (id == 0)
             Batch();
@@ -83,7 +83,7 @@ public class Waepon : MonoBehaviour
 
         //프로퍼티 세팅
         id = data.itemId;
-        damage = data.baseDamage;
+        damage = data.baseDamage * Character.Damage ;
         count = data.baseCount;
 
         for (int index  = 0; index < GameManager.instance.pool.prefabs.Length; index++)
@@ -99,14 +99,14 @@ public class Waepon : MonoBehaviour
         switch (id)
         {
             case 0:
-                speed = 150;       //시계방향으로 돌려면 음수
+                speed = 150 * Character.WeaponSpeed;       //시계방향으로 돌려면 음수
                 Batch();
 
                 break;
             
 
             default:
-                speed = 0.4f;
+                speed = 0.4f * Character.WeaponRate;
                 break;
         }
 

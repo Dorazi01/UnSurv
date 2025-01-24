@@ -16,6 +16,7 @@ public class Player : MonoBehaviour //MonoBehaviour = 게임 로직 구정에 필요한것�
     public Vector2 inputVec;
     public Scanner scanner;
     public Hand[] hands;
+    public RuntimeAnimatorController[] animCon;
 
     //게임오브젝트의 리지드바디 2D를 저장할 변수 선언
     Rigidbody2D rigid;
@@ -41,7 +42,11 @@ public class Player : MonoBehaviour //MonoBehaviour = 게임 로직 구정에 필요한것�
     }
 
 
-
+    private void OnEnable()
+    {
+        speed *= Character.Speed;
+        anim.runtimeAnimatorController = animCon[GameManager.instance.playerId];
+    }
 
 
 
