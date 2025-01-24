@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -50,15 +51,21 @@ public class Player : MonoBehaviour //MonoBehaviour = 게임 로직 구정에 필요한것�
         
     }
 
-    
 
 
+    private void Update()
+    {
+        if (!GameManager.instance.isLive)
+            return;
 
+    }
 
 
     //물리연산 프레임마다 호출되는 생명주기함수
     void FixedUpdate()
     {
+        if (!GameManager.instance.isLive)
+            return;
         //normalized = 정규화, 벡터 값의 크기가 1이 되도록 좌표가 수정된 값. 대각선 이동을 할 때 더 빠르게 움직이는 것을 방지하기 위함.
         Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
         //fixedDeltatime = 물리 프레임 하나가 소비한 시간
@@ -83,6 +90,8 @@ public class Player : MonoBehaviour //MonoBehaviour = 게임 로직 구정에 필요한것�
     /// </summary>
     void LateUpdate()
     {
+        if (!GameManager.instance.isLive)
+            return;
 
         anim.SetFloat("Speed",inputVec.magnitude);
         //magnitude : 벡터의 순수한 크기 값으로 변환

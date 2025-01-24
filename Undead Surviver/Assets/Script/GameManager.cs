@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     //인스펙터의 속성을 이쁘게 구분시켜주는 헤더
     [Header("# Game Control")]
-
+    public bool isLive;
     public float gameTime;
     public float maxGameTime = 2 * 10f;
 
@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     public Player player;
     //게임 매니저에 해당하는 오브젝트가 들어가 있어야 함
 
+    public LevelUp uiLevelUp;
+
 
 
     void Awake()
@@ -45,9 +47,16 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+
+        //임시 (캐릭터 선택)
+        uiLevelUp.Select(0);
+
     }
     void Update()
     {
+        if (!isLive)
+            return;
+
         gameTime += Time.deltaTime;
 
         if (gameTime > maxGameTime)
@@ -62,13 +71,25 @@ public class GameManager : MonoBehaviour
     public void GetExp()
     {
         exp++;
-        if (exp == nextExp[level])
+        if (exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
         {
             level++;
             exp = 0;
-
+            uiLevelUp.Show();
 
         }
+    }
+
+    public void Stop()
+    {
+        isLive = false;
+        Time.timeScale = 0;
+    }
+
+    public void Resume()
+    {
+        isLive= true;
+        Time.timeScale = 1;
     }
 
 }
