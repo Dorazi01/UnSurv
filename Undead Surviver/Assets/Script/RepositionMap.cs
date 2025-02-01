@@ -29,21 +29,21 @@ public class RepositionMap : MonoBehaviour
         Vector3 playerPos = GameManager.instance.player.transform.position;
         //Player을 상속받을 수 있는 이유는 게임매니저에 싱글톤패턴을 사용했기 때문이다.\
         Vector3 myPos = transform.position;
-        float diffX = Mathf.Abs(playerPos.x - myPos.x);
-        float diffY = Mathf.Abs(playerPos.y - myPos.y);
-        //Mathf.abs = 절댓값
-        //playerPos = 플레이어의 위치값, myPos = 맵 타일의 위치값]
-        //diffX,Y = 플레이어와 타일맵의 위치 비교
-
-
-        Vector3 playerDir = GameManager.instance.player.inputVec;
-        float dirX = playerDir.x < 0 ? -1 : 1;
-        float dirY = playerDir.y < 0 ? -1 : 1;
+        
         //뒤쪽에 있는 타일 맵을 어느쪽으로 추가할 지 알기위해 만든 변수같음
 
         switch (transform.tag)
         {
             case "Ground":
+
+                float diffX = playerPos.x - myPos.x;
+                float diffY = playerPos.y - myPos.y;
+                float dirX = diffX < 0 ? -1 : 1;
+                float dirY = diffY < 0 ? -1 : 1;
+                diffX = Mathf.Abs(diffX);
+                diffY = Mathf.Abs(diffY);
+
+
                 if (diffX > diffY)
                 {
                     transform.Translate(Vector3.right * dirX * 40);
@@ -61,7 +61,9 @@ public class RepositionMap : MonoBehaviour
             case "Enemy":
                 if (coll.enabled)
                 {
-                    transform.Translate(playerDir * 35 + new Vector3(Random.Range(-3f,3f),Random.Range(-3f, 3f), 0f));
+                    Vector3 dist = playerPos - myPos;
+                    Vector3 ran = new Vector3(Random.Range(-3, 3),0);
+                    transform.Translate(ran + dist * 2);
                 }
 
                 break;
