@@ -112,6 +112,9 @@ public class AchieveManager : MonoBehaviour
         yield return wait;
 
         uiNotice.SetActive(false);
+
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
+
     }
 
 
